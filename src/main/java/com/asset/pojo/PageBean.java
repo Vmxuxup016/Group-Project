@@ -3,10 +3,6 @@ package com.asset.pojo;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 分页工具类
- * 支持 JSP 视图中的分页组件渲染
- */
 public class PageBean<T> {
 
     private int pageNum;        // 当前页码
