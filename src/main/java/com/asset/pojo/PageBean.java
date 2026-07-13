@@ -1,46 +1,83 @@
 package com.asset.pojo;
 
-public class PageBean {
+import java.util.ArrayList;
+import java.util.List;
 
-    //当前页码（从1开始）
-    private int currentPage;
+/**
+ * 分页工具类
+ * 支持 JSP 视图中的分页组件渲染
+ */
+public class PageBean<T> {
 
-    //每页显示的记录数
-    private int pageSize;
+    private int pageNum;        // 当前页码
+    private int pageSize;       // 每页大小
+    private int total;          // 总记录数
+    private int pages;          // 总页数
+    private int prePage;        // 上一页
+    private int nextPage;       // 下一页
+    private boolean hasPreviousPage;  // 是否有上一页
+    private boolean hasNextPage;      // 是否有下一页
+    private List<Integer> navigatepageNums; // 导航页码列表
+    private List<T> list;       // 当前页数据
 
-    //总记录数
-    private int totalCount;
-
-    //总页数（根据 totalCount 和 pageSize 自动计算）
-    private int totalPage;
-
-    //无参构造
     public PageBean() {}
-    public PageBean(int currentPage, int pageSize, int totalCount) {
-        this.currentPage = currentPage;
-        this.pageSize = pageSize;
-        this.totalCount = totalCount;
-        // 总页数 = 向上取整(总记录数 / 每页大小)
-        this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
+
+    public PageBean(int pageNum, int pageSize, int total) {
+        this.pageNum = pageNum > 0 ? pageNum : 1;
+        this.pageSize = pageSize > 0 ? pageSize : 10;
+        this.total = total;
+        this.pages = (int) Math.ceil((double) total / this.pageSize);
+        if (this.pages < 1) this.pages = 1;
+        this.prePage = this.pageNum > 1 ? this.pageNum - 1 : 1;
+        this.nextPage = this.pageNum < this.pages ? this.pageNum + 1 : this.pages;
+        this.hasPreviousPage = this.pageNum > 1;
+        this.hasNextPage = this.pageNum < this.pages;
+        this.navigatepageNums = buildNavigateNums();
+        this.list = new ArrayList<>();
     }
 
-    public int getCurrentPage() { return currentPage; }
-    public void setCurrentPage(int currentPage) { this.currentPage = currentPage; }
-    public int getPageSize() { return pageSize; }
-    public void setPageSize(int pageSize) { this.pageSize = pageSize; }
-    public int getTotalCount() { return totalCount; }
-
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-        // 总页数 = 向上取整(总记录数 / 每页大小)
-        this.totalPage = (int) Math.ceil((double) totalCount / pageSize);
+    private List<Integer> buildNavigateNums() {
+        List<Integer> nums = new ArrayList<>();
+        int start = Math.max(1, pageNum - 2);
+        int end = Math.min(pages, pageNum + 2);
+        for (int i = start; i <= end; i++) {
+            nums.add(i);
+        }
+        return nums;
     }
-
-    public int getTotalPage() { return totalPage; }
-    public void setTotalPage(int totalPage) { this.totalPage = totalPage; }
 
     public int getOffset() {
-        // offset = (当前页 - 1) x 每页大小
-        return (currentPage - 1) * pageSize;
+        return (pageNum - 1) * pageSize;
     }
+
+    // Getters & Setters
+    public int getPageNum() { return pageNum; }
+    public void setPageNum(int pageNum) { this.pageNum = pageNum; }
+    public int getPageSize() { return pageSize; }
+    public void setPageSize(int pageSize) { this.pageSize = pageSize; }
+    public int getTotal() { return total; }
+    public void setTotal(int total) {
+        this.total = total;
+        this.pages = (int) Math.ceil((double) total / this.pageSize);
+        if (this.pages < 1) this.pages = 1;
+        this.prePage = this.pageNum > 1 ? this.pageNum - 1 : 1;
+        this.nextPage = this.pageNum < this.pages ? this.pageNum + 1 : this.pages;
+        this.hasPreviousPage = this.pageNum > 1;
+        this.hasNextPage = this.pageNum < this.pages;
+        this.navigatepageNums = buildNavigateNums();
+    }
+    public int getPages() { return pages; }
+    public void setPages(int pages) { this.pages = pages; }
+    public int getPrePage() { return prePage; }
+    public void setPrePage(int prePage) { this.prePage = prePage; }
+    public int getNextPage() { return nextPage; }
+    public void setNextPage(int nextPage) { this.nextPage = nextPage; }
+    public boolean getHasPreviousPage() { return hasPreviousPage; }
+    public void setHasPreviousPage(boolean hasPreviousPage) { this.hasPreviousPage = hasPreviousPage; }
+    public boolean getHasNextPage() { return hasNextPage; }
+    public void setHasNextPage(boolean hasNextPage) { this.hasNextPage = hasNextPage; }
+    public List<Integer> getNavigatepageNums() { return navigatepageNums; }
+    public void setNavigatepageNums(List<Integer> navigatepageNums) { this.navigatepageNums = navigatepageNums; }
+    public List<T> getList() { return list; }
+    public void setList(List<T> list) { this.list = list; }
 }
