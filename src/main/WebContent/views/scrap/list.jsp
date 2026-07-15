@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+1<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -25,6 +25,36 @@
                 <a href="${pageContext.request.contextPath}/scrap/add" class="btn btn-primary">
                     <i class="fas fa-plus mr-2"></i>新增报废单
                 </a>
+            </div>
+
+            <c:set var="pendingCount" value="0"/>
+            <c:set var="approvedCount" value="0"/>
+            <c:set var="executedCount" value="0"/>
+            <c:set var="rejectedCount" value="0"/>
+            <c:forEach items="${scrapList}" var="s">
+                <c:if test="${s.status == 1}"><c:set var="pendingCount" value="${pendingCount + 1}"/></c:if>
+                <c:if test="${s.status == 2}"><c:set var="approvedCount" value="${approvedCount + 1}"/></c:if>
+                <c:if test="${s.status == 3}"><c:set var="executedCount" value="${executedCount + 1}"/></c:if>
+                <c:if test="${s.status == 4}"><c:set var="rejectedCount" value="${rejectedCount + 1}"/></c:if>
+            </c:forEach>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="card p-4 border-l-4 border-amber-500">
+                    <p class="text-gray-500 text-sm">待审批</p>
+                    <p class="text-2xl font-bold text-amber-600">${pendingCount}</p>
+                </div>
+                <div class="card p-4 border-l-4 border-blue-500">
+                    <p class="text-gray-500 text-sm">已通过</p>
+                    <p class="text-2xl font-bold text-blue-600">${approvedCount}</p>
+                </div>
+                <div class="card p-4 border-l-4 border-emerald-500">
+                    <p class="text-gray-500 text-sm">已执行</p>
+                    <p class="text-2xl font-bold text-emerald-600">${executedCount}</p>
+                </div>
+                <div class="card p-4 border-l-4 border-rose-500">
+                    <p class="text-gray-500 text-sm">驳回</p>
+                    <p class="text-2xl font-bold text-rose-600">${rejectedCount}</p>
+                </div>
             </div>
 
             <div class="card overflow-hidden">
