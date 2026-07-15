@@ -40,6 +40,11 @@ public class AssetInventoryDao {
         return jdbc.update(sql, status, id);
     }
 
+    public int updateStartDate(Integer id, String startDate) {
+        String sql = "UPDATE asset_inventory SET start_date=? WHERE id=?";
+        return jdbc.update(sql, startDate, id);
+    }
+
     public int complete(Integer id, Integer resultStatus) {
         String sql = "UPDATE asset_inventory SET status=3, result_status=?, end_date=CURDATE() WHERE id=?";
         return jdbc.update(sql, resultStatus, id);
