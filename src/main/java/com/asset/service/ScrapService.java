@@ -26,6 +26,9 @@ public class ScrapService {
         if (scrap.getStatus() == null) {
             scrap.setStatus(1);
         }
+        if (scrap.getOriginalValue() == null) {
+            scrap.setOriginalValue(BigDecimal.ZERO);
+        }
         scrapDao.save(scrap);
     }
 

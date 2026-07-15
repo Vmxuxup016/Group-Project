@@ -59,7 +59,14 @@ public class ScrapServlet extends HttpServlet {
         scrap.setScrapReason(req.getParameter("scrapReason"));
         scrap.setScrapType(parseInt(req.getParameter("scrapType"), 1));
         String ov = req.getParameter("originalValue");
-        if (ov != null && !ov.isEmpty()) scrap.setOriginalValue(new BigDecimal(ov));
+        if (ov != null && !ov.isEmpty()) {
+            scrap.setOriginalValue(new BigDecimal(ov));
+        } else {
+            // 自动从资产档案读取原值
+            com.asset.pojo.Asset asset = new AssetDao().findById(scrap.getAssetId());
+            scrap.setOriginalValue(asset != null && asset.getPurchasePrice() != null
+                    ? asset.getPurchasePrice() : BigDecimal.ZERO);
+        }
         scrap.setCreateBy(1);
         scrapService.save(scrap);
         resp.sendRedirect(req.getContextPath() + "/scrap/list");
