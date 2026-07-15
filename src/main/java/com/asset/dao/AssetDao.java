@@ -153,4 +153,11 @@ public class AssetDao {
         Integer count = jdbc.queryForObject(sql, Integer.class, deptId);
         return count != null ? count : 0;
     }
+
+    //根据分类ID统计资产数量
+    public int countByCategoryId(Integer categoryId) {
+        String sql = "SELECT COUNT(*) FROM asset WHERE category_id = ?";
+        Integer count = jdbc.queryForObject(sql, Integer.class, categoryId);
+        return count != null ? count : 0;
+    }
 }

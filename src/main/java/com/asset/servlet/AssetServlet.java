@@ -77,8 +77,9 @@ public class AssetServlet extends HttpServlet {
         PageBean<Asset> pageInfo = assetService.findByPage(keyword, status, categoryId, deptId, page, 10);
         req.setAttribute("assetList", pageInfo.getList());
         req.setAttribute("pageInfo", pageInfo);
-        req.setAttribute("categoryList", new com.asset.dao.AssetCategoryDao().findAll());
-        req.setAttribute("deptList", new com.asset.dao.DepartmentDao().findAll());
+        Map<String, Object> filterData = assetService.getAddFormData();
+        req.setAttribute("categoryList", filterData.get("categoryList"));
+        req.setAttribute("deptList", filterData.get("deptList"));
         req.getRequestDispatcher("/views/asset/list.jsp").forward(req, resp);
     }
 

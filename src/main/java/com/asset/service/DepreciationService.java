@@ -22,9 +22,23 @@ public class DepreciationService {
         return depreciationDao.findAll();
     }
 
+    public List<AssetDepreciation> findByMonth(String month) {
+        return depreciationDao.findByMonth(month);
+    }
+
+    public List<String> findAvailableMonths() {
+        return depreciationDao.findAvailableMonths();
+    }
+
     public Map<String, Object> getDashboardData() {
+        return getDashboardDataByMonth(null);
+    }
+
+    public Map<String, Object> getDashboardDataByMonth(String month) {
         Map<String, Object> data = new HashMap<>();
-        List<AssetDepreciation> list = depreciationDao.findAll();
+        List<AssetDepreciation> list = (month != null && !month.isEmpty())
+                ? depreciationDao.findByMonth(month)
+                : depreciationDao.findAll();
         BigDecimal totalOriginal = BigDecimal.ZERO;
         BigDecimal totalAccumulated = BigDecimal.ZERO;
         BigDecimal totalNet = BigDecimal.ZERO;
@@ -48,6 +62,9 @@ public class DepreciationService {
             if (asset.getStatus() != null && asset.getStatus() == 4) continue;
             if (asset.getDepreciableMonths() == null || asset.getDepreciableMonths() <= 0) continue;
             if (asset.getDepreciatedMonths() != null && asset.getDepreciatedMonths() >= asset.getDepreciableMonths()) continue;
+
+            // 防止重复计提：当前月份已计提过的资产跳过
+            if (depreciationDao.existsByAssetIdAndMonth(asset.getId(), month)) continue;
 
             int depreciatedMonths = (asset.getDepreciatedMonths() != null ? asset.getDepreciatedMonths() : 0) + 1;
             int remainingMonths = asset.getDepreciableMonths() - depreciatedMonths;

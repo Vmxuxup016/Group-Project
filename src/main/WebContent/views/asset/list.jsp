@@ -110,7 +110,7 @@
                                 <td class="text-center">
                                     <a href="${pageContext.request.contextPath}/asset/detail?id=${asset.id}" class="text-blue-600 hover:text-blue-800 mr-2" title="查看"><i class="fas fa-eye"></i></a>
                                     <a href="${pageContext.request.contextPath}/asset/edit?id=${asset.id}" class="text-amber-600 hover:text-amber-800 mr-2" title="编辑"><i class="fas fa-edit"></i></a>
-                                    <a href="${pageContext.request.contextPath}/asset/delete?id=${asset.id}" class="text-rose-600 hover:text-rose-800" title="删除" onclick="return confirmDelete('确定删除资产 ${asset.assetName} 吗？')"><i class="fas fa-trash"></i></a>
+                                    <a href="${pageContext.request.contextPath}/asset/delete?id=${asset.id}" class="text-rose-600 hover:text-rose-800" title="删除" onclick="return confirm('确定删除资产 ${asset.assetName} 吗？')"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                             </c:forEach>

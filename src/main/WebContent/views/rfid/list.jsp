@@ -26,9 +26,10 @@
                     <a href="${pageContext.request.contextPath}/rfid/add" class="btn btn-primary">
                         <i class="fas fa-plus mr-2"></i>注册标签
                     </a>
-                    <button class="btn" style="background:#7c3aed;color:white" onclick="showToast('正在扫描RFID标签...', 'info')">
+                    <a href="${pageContext.request.contextPath}/rfid/batchScan" class="btn" style="background:#7c3aed;color:white"
+                       onclick="return confirm('确定对所有正常标签执行批量扫描吗？')">
                         <i class="fas fa-wifi mr-2"></i>批量扫描
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -81,12 +82,21 @@
                             <td class="text-center font-medium">${tag.scanCount}</td>
                             <td class="text-center">
                                 <c:if test="${tag.tagStatus == 3}">
-                                <a href="${pageContext.request.contextPath}/rfid/bind?id=${tag.id}" class="text-emerald-600 hover:text-emerald-800 mr-2" title="绑定"><i class="fas fa-link"></i></a>
+                                <a href="${pageContext.request.contextPath}/rfid/detail?id=${tag.id}" class="text-emerald-600 hover:text-emerald-800 mr-2" title="绑定资产">
+                                    <i class="fas fa-link"></i>
+                                </a>
                                 </c:if>
                                 <c:if test="${tag.tagStatus == 1}">
-                                <a href="${pageContext.request.contextPath}/rfid/unbind?id=${tag.id}" class="text-rose-600 hover:text-rose-800 mr-2" title="解绑" onclick="return confirmDelete()"><i class="fas fa-unlink"></i></a>
+                                <a href="${pageContext.request.contextPath}/rfid/unbind?id=${tag.id}" class="text-rose-600 hover:text-rose-800 mr-2" title="解绑" onclick="return confirm('确定解绑该资产吗？')">
+                                    <i class="fas fa-unlink"></i>
+                                </a>
                                 </c:if>
-                                <a href="${pageContext.request.contextPath}/rfid/detail?id=${tag.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <a href="${pageContext.request.contextPath}/rfid/detail?id=${tag.id}" class="text-blue-600 hover:text-blue-800 mr-2" title="详情">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="${pageContext.request.contextPath}/rfid/delete?id=${tag.id}" class="text-red-500 hover:text-red-700" title="删除" onclick="return confirm('确定删除该标签吗？')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </td>
                         </tr>
                         </c:forEach>

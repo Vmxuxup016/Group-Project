@@ -25,6 +25,9 @@ public class SupplierServlet extends HttpServlet {
                 req.setAttribute("supplierList", supplierService.findAll());
                 req.getRequestDispatcher("/views/supplier/list.jsp").forward(req, resp);
                 break;
+            case "/add":
+                req.getRequestDispatcher("/views/supplier/add.jsp").forward(req, resp);
+                break;
             case "/edit":
                 req.setAttribute("supplier", supplierService.findById(parseInt(req.getParameter("id"))));
                 req.getRequestDispatcher("/views/supplier/edit.jsp").forward(req, resp);

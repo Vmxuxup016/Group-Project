@@ -35,4 +35,21 @@ public class RfidService {
     public void delete(Integer id) {
         rfidTagDao.delete(id);
     }
+
+    public void updateScanInfo(Integer id, String location) {
+        rfidTagDao.updateScanInfo(id, location);
+    }
+
+    public void updateStatus(Integer id, Integer status) {
+        rfidTagDao.updateStatus(id, status);
+    }
+
+    public void batchScan() {
+        List<AssetRfidTag> tags = rfidTagDao.findAll();
+        for (AssetRfidTag tag : tags) {
+            if (tag.getTagStatus() != null && tag.getTagStatus() == 1) {
+                rfidTagDao.updateScanInfo(tag.getId(), "批量扫描");
+            }
+        }
+    }
 }

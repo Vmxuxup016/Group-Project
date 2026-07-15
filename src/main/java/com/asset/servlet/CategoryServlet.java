@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet("/category/*")
 public class CategoryServlet extends HttpServlet {
@@ -23,21 +24,28 @@ public class CategoryServlet extends HttpServlet {
         switch (path) {
             case "/list":
                 req.setAttribute("categoryList", categoryService.findAll());
+                Map<Integer, Integer> assetCounts = categoryService.getAssetCountByCategory();
+                req.setAttribute("assetCounts", assetCounts);
+                req.setAttribute("pageTitle", "资产分类");
                 req.getRequestDispatcher("/views/category/list.jsp").forward(req, resp);
                 break;
             case "/add":
                 req.setAttribute("categoryList", categoryService.findAll());
+                req.setAttribute("pageTitle", "资产分类");
                 req.getRequestDispatcher("/views/category/add.jsp").forward(req, resp);
                 break;
             case "/edit":
                 Integer id = parseInt(req.getParameter("id"));
                 req.setAttribute("category", categoryService.findById(id));
+                req.setAttribute("categoryList", categoryService.findAll());
+                req.setAttribute("pageTitle", "资产分类");
                 req.getRequestDispatcher("/views/category/edit.jsp").forward(req, resp);
                 break;
             case "/delete":
                 boolean success = categoryService.delete(parseInt(req.getParameter("id")));
                 if (!success) {
-                    resp.sendRedirect(req.getContextPath() + "/category/list?error=has_children");
+                    resp.sendRedirect(req.getContextPath()
+                            + "/category/list?error=delete_failed");
                 } else {
                     resp.sendRedirect(req.getContextPath() + "/category/list");
                 }

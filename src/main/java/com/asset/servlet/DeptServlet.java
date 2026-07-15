@@ -31,6 +31,7 @@ public class DeptServlet extends HttpServlet {
                 break;
             case "/edit":
                 req.setAttribute("dept", deptService.findById(parseInt(req.getParameter("id"))));
+                req.setAttribute("deptList", deptService.findAll());
                 req.getRequestDispatcher("/views/dept/edit.jsp").forward(req, resp);
                 break;
             case "/delete":

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet("/transfer/*")
 public class TransferServlet extends HttpServlet {
@@ -23,18 +24,37 @@ public class TransferServlet extends HttpServlet {
         switch (path) {
             case "/list":
                 req.setAttribute("transferList", transferService.findAll());
+                req.setAttribute("pageTitle", "调拨审批");
                 req.getRequestDispatcher("/views/transfer/list.jsp").forward(req, resp);
                 break;
+
+            case "/add":
+                Map<String, Object> formData = transferService.getAddFormData();
+                for (Map.Entry<String, Object> entry : formData.entrySet()) {
+                    req.setAttribute(entry.getKey(), entry.getValue());
+                }
+                req.setAttribute("pageTitle", "调拨审批");
+                req.getRequestDispatcher("/views/transfer/add.jsp").forward(req, resp);
+                break;
+
             case "/detail":
-                req.setAttribute("transfer", transferService.findById(parseInt(req.getParameter("id"))));
+                Integer detailId = parseInt(req.getParameter("id"));
+                if (detailId != null) {
+                    req.setAttribute("record", transferService.findById(detailId));
+                }
+                req.setAttribute("pageTitle", "调拨审批");
                 req.getRequestDispatcher("/views/transfer/detail.jsp").forward(req, resp);
                 break;
+
             case "/approve":
                 Integer id = parseInt(req.getParameter("id"));
                 boolean pass = "pass".equals(req.getParameter("action"));
-                transferService.approve(id, pass);
-                resp.sendRedirect(req.getContextPath() + "/transfer/list");
+                if (id != null) {
+                    transferService.approve(id, pass);
+                }
+                resp.sendRedirect(req.getContextPath() + "/transfer/detail?id=" + id);
                 break;
+
             default:
                 resp.sendRedirect(req.getContextPath() + "/transfer/list");
         }
@@ -43,15 +63,21 @@ public class TransferServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         req.setCharacterEncoding("UTF-8");
-        AssetUseRecord record = new AssetUseRecord();
-        record.setAssetId(parseInt(req.getParameter("assetId")));
-        record.setFromDeptId(parseInt(req.getParameter("fromDeptId")));
-        record.setToDeptId(parseInt(req.getParameter("toDeptId")));
-        record.setUseDate(req.getParameter("useDate"));
-        record.setPurpose(req.getParameter("purpose"));
-        record.setOperatorId(parseInt(req.getParameter("operatorId"), 1));
-        transferService.save(record);
-        resp.sendRedirect(req.getContextPath() + "/transfer/list");
+        String path = req.getPathInfo();
+
+        if ("/save".equals(path)) {
+            AssetUseRecord record = new AssetUseRecord();
+            record.setAssetId(parseInt(req.getParameter("assetId")));
+            record.setFromDeptId(parseInt(req.getParameter("fromDeptId")));
+            record.setToDeptId(parseInt(req.getParameter("toDeptId")));
+            record.setUseDate(req.getParameter("useDate"));
+            record.setPurpose(req.getParameter("purpose"));
+            record.setOperatorId(parseInt(req.getParameter("operatorId"), 1));
+            transferService.save(record);
+            resp.sendRedirect(req.getContextPath() + "/transfer/list");
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/transfer/list");
+        }
     }
 
     private Integer parseInt(String str) { return parseInt(str, null); }

@@ -35,10 +35,10 @@
                 </div>
             </div>
 
-            <c:if test="${param.error == 'has_children'}">
+            <c:if test="${param.error == 'delete_failed'}">
             <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center gap-2">
                 <i class="fas fa-exclamation-circle"></i>
-                <span>该分类下存在子分类，请先删除子分类后再操作</span>
+                <span>无法删除：该分类下存在子分类或已被资产引用，请先清理关联数据后再操作</span>
             </div>
             </c:if>
 
@@ -57,10 +57,11 @@
                                 <span class="text-gray-400 text-sm ml-2">${cat1.categoryCode}</span>
                                 <span class="text-xs text-blue-500 ml-2">一级</span>
                             </div>
-                            <span class="text-sm text-gray-500">折旧: ${cat1.depreciableLife}个月</span>
+                            <span class="text-sm text-gray-500">折旧: ${cat1.depreciableLife}月</span>
+                            <span class="text-sm font-medium" style="color:#7c3aed;">资产: ${assetCounts[cat1.id] != null ? assetCounts[cat1.id] : 0}</span>
                             <div class="flex gap-2" onclick="event.stopPropagation()">
                                 <a href="${pageContext.request.contextPath}/category/edit?id=${cat1.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                <a href="${pageContext.request.contextPath}/category/delete?id=${cat1.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="${pageContext.request.contextPath}/category/delete?id=${cat1.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该分类吗？如有子分类或关联资产将无法删除。')"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                         <div class="tree-children ml-8 space-y-1">
@@ -77,10 +78,11 @@
                                         <span class="text-gray-400 text-sm ml-2">${cat2.categoryCode}</span>
                                         <span class="text-xs text-emerald-500 ml-2">二级</span>
                                     </div>
-                                    <span class="text-sm text-gray-500">折旧: ${cat2.depreciableLife}个月</span>
+                                    <span class="text-sm text-gray-500">折旧: ${cat2.depreciableLife}月</span>
+                                    <span class="text-sm font-medium" style="color:#7c3aed;">资产: ${assetCounts[cat2.id] != null ? assetCounts[cat2.id] : 0}</span>
                                     <div class="flex gap-2" onclick="event.stopPropagation()">
                                         <a href="${pageContext.request.contextPath}/category/edit?id=${cat2.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                        <a href="${pageContext.request.contextPath}/category/delete?id=${cat2.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                        <a href="${pageContext.request.contextPath}/category/delete?id=${cat2.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该分类吗？如有子分类或关联资产将无法删除。')"><i class="fas fa-trash"></i></a>
                                     </div>
                                 </div>
                                 <div class="tree-children ml-8 space-y-1">
@@ -97,10 +99,11 @@
                                                 <span class="text-gray-400 text-sm ml-2">${cat3.categoryCode}</span>
                                                 <span class="text-xs text-amber-500 ml-2">三级</span>
                                             </div>
-                                            <span class="text-sm text-gray-500">折旧: ${cat3.depreciableLife}个月</span>
+                                            <span class="text-sm text-gray-500">折旧: ${cat3.depreciableLife}月</span>
+                                            <span class="text-sm font-medium" style="color:#7c3aed;">资产: ${assetCounts[cat3.id] != null ? assetCounts[cat3.id] : 0}</span>
                                             <div class="flex gap-2">
                                                 <a href="${pageContext.request.contextPath}/category/edit?id=${cat3.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                                <a href="${pageContext.request.contextPath}/category/delete?id=${cat3.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                                <a href="${pageContext.request.contextPath}/category/delete?id=${cat3.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该分类吗？如有子分类或关联资产将无法删除。')"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </div>
                                     </div>

@@ -31,4 +31,28 @@ public class AssetDepreciationDao {
                 depreciation.getAccumulatedDepreciation(), depreciation.getNetValue(),
                 depreciation.getRemainingMonths());
     }
+
+    // 按月份筛选折旧记录
+    public List<AssetDepreciation> findByMonth(String month) {
+        String sql = "SELECT d.*, a.asset_code AS assetCode, a.asset_name AS assetName " +
+                     "FROM asset_depreciation d LEFT JOIN asset a ON d.asset_id = a.id " +
+                     "WHERE DATE_FORMAT(d.depreciation_date, '%Y-%m') = ? " +
+                     "ORDER BY d.id DESC";
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(AssetDepreciation.class), month);
+    }
+
+    // 获取所有有折旧记录的月份列表
+    public List<String> findAvailableMonths() {
+        String sql = "SELECT DISTINCT DATE_FORMAT(depreciation_date, '%Y-%m') AS month " +
+                     "FROM asset_depreciation ORDER BY month DESC";
+        return jdbc.queryForList(sql, String.class);
+    }
+
+    // 检查指定资产在指定月份是否已计提折旧
+    public boolean existsByAssetIdAndMonth(Integer assetId, String month) {
+        String sql = "SELECT COUNT(*) FROM asset_depreciation " +
+                     "WHERE asset_id = ? AND DATE_FORMAT(depreciation_date, '%Y-%m') = ?";
+        Integer count = jdbc.queryForObject(sql, Integer.class, assetId, month);
+        return count != null && count > 0;
+    }
 }

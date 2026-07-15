@@ -43,7 +43,7 @@
                         <span class="text-sm text-gray-500">根节点</span>
                         <div class="flex gap-2">
                             <a href="${pageContext.request.contextPath}/dept/edit?id=${dept.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                            <a href="${pageContext.request.contextPath}/dept/delete?id=${dept.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                            <a href="${pageContext.request.contextPath}/dept/delete?id=${dept.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
                     <div class="ml-8 space-y-3">
@@ -60,7 +60,7 @@
                             <span class="text-sm text-gray-500">资产: ${child.assetCount != null ? child.assetCount : '0'}</span>
                             <div class="flex gap-2">
                                 <a href="${pageContext.request.contextPath}/dept/edit?id=${child.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                <a href="${pageContext.request.contextPath}/dept/delete?id=${child.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="${pageContext.request.contextPath}/dept/delete?id=${child.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                         </c:if>
@@ -80,7 +80,7 @@
                         <span class="text-sm text-gray-500">根节点</span>
                         <div class="flex gap-2">
                             <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                            <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                            <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
                     <div class="ml-8 space-y-3">
@@ -95,7 +95,7 @@
                             <span class="text-sm text-gray-500">资产: 128</span>
                             <div class="flex gap-2">
                                 <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-xl">
@@ -109,7 +109,7 @@
                             <span class="text-sm text-gray-500">资产: 86</span>
                             <div class="flex gap-2">
                                 <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-xl">
@@ -123,7 +123,7 @@
                             <span class="text-sm text-gray-500">资产: 245</span>
                             <div class="flex gap-2">
                                 <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-xl">
@@ -137,7 +137,7 @@
                             <span class="text-sm text-gray-500">资产: 62</span>
                             <div class="flex gap-2">
                                 <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                         <div class="flex items-center gap-3 p-4 bg-white border border-gray-200 rounded-xl">
@@ -151,7 +151,7 @@
                             <span class="text-sm text-gray-500">资产: 198</span>
                             <div class="flex gap-2">
                                 <a href="#" class="text-blue-600 hover:text-blue-800"><i class="fas fa-edit"></i></a>
-                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="#" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该部门吗？如有子部门将无法删除。')"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                     </div>

@@ -49,9 +49,10 @@
                     <h3 class="font-bold text-gray-800">折旧明细记录</h3>
                     <form action="${pageContext.request.contextPath}/depreciation/list" method="get" style="display:inline">
                         <select name="month" class="form-select" style="width:auto" onchange="this.form.submit()">
-                            <option value="2024-06" ${param.month == '2024-06' ? 'selected' : ''}>2024年6月</option>
-                            <option value="2024-05" ${param.month == '2024-05' ? 'selected' : ''}>2024年5月</option>
-                            <option value="2024-04" ${param.month == '2024-04' ? 'selected' : ''}>2024年4月</option>
+                            <option value="">全部月份</option>
+                            <c:forEach items="${availableMonths}" var="m">
+                                <option value="${m}" ${selectedMonth == m ? 'selected' : ''}>${m}</option>
+                            </c:forEach>
                         </select>
                     </form>
                 </div>
