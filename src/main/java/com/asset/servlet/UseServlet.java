@@ -67,8 +67,8 @@ public class UseServlet extends HttpServlet {
         AssetUseRecord record = new AssetUseRecord();
         record.setAssetId(parseInt(req.getParameter("assetId")));
         record.setOperationType(parseInt(req.getParameter("operationType"), 1));
-        record.setFromDeptId(parseInt(req.getParameter("fromDeptId")));
-        record.setToDeptId(parseInt(req.getParameter("toDeptId")));
+        record.setFromDeptId(parseInt(req.getParameter("fromDeptId"), 0));
+        record.setToDeptId(parseInt(req.getParameter("toDeptId"), 0));
         record.setUseDate(req.getParameter("useDate"));
         record.setExpectedReturnDate(req.getParameter("expectedReturnDate"));
         record.setPurpose(req.getParameter("purpose"));

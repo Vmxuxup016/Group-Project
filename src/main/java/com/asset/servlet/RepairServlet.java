@@ -1,5 +1,7 @@
 package com.asset.servlet;
 
+import com.asset.dao.AssetDao;
+import com.asset.dao.DepartmentDao;
 import com.asset.pojo.AssetRepair;
 import com.asset.service.RepairService;
 
@@ -28,6 +30,11 @@ public class RepairServlet extends HttpServlet {
                 for (Map.Entry<String, Object> e : stats.entrySet()) req.setAttribute(e.getKey(), e.getValue());
                 req.setAttribute("repairList", repairService.findAll());
                 req.getRequestDispatcher("/views/repair/list.jsp").forward(req, resp);
+                break;
+            case "/add":
+                req.setAttribute("assetList", new AssetDao().findList(null, null, null, null, 0, 1000));
+                req.setAttribute("deptList", new DepartmentDao().findAll());
+                req.getRequestDispatcher("/views/repair/add.jsp").forward(req, resp);
                 break;
             case "/detail":
                 req.setAttribute("repair", repairService.findById(parseInt(req.getParameter("id"))));

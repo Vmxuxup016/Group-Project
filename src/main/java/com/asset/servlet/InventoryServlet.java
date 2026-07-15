@@ -1,5 +1,8 @@
 package com.asset.servlet;
 
+import com.asset.dao.AssetCategoryDao;
+import com.asset.dao.DepartmentDao;
+import com.asset.dao.UserDao;
 import com.asset.pojo.AssetInventory;
 import com.asset.service.InventoryService;
 
@@ -33,6 +36,12 @@ public class InventoryServlet extends HttpServlet {
                 req.setAttribute("inventory", inventoryService.findById(id));
                 req.setAttribute("details", inventoryService.findDetailsByInventoryId(id));
                 req.getRequestDispatcher("/views/inventory/detail.jsp").forward(req, resp);
+                break;
+            case "/add":
+                req.setAttribute("userList", new UserDao().findAll());
+                req.setAttribute("deptList", new DepartmentDao().findAll());
+                req.setAttribute("categoryList", new AssetCategoryDao().findAll());
+                req.getRequestDispatcher("/views/inventory/add.jsp").forward(req, resp);
                 break;
             case "/scan":
                 Integer sid = parseInt(req.getParameter("id"));

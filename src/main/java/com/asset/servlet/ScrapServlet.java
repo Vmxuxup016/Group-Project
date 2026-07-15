@@ -1,5 +1,6 @@
 package com.asset.servlet;
 
+import com.asset.dao.AssetDao;
 import com.asset.pojo.AssetScrap;
 import com.asset.service.ScrapService;
 
@@ -29,6 +30,10 @@ public class ScrapServlet extends HttpServlet {
             case "/detail":
                 req.setAttribute("scrap", scrapService.findById(parseInt(req.getParameter("id"))));
                 req.getRequestDispatcher("/views/scrap/detail.jsp").forward(req, resp);
+                break;
+            case "/add":
+                req.setAttribute("assetList", new AssetDao().findList(null, null, null, null, 0, 1000));
+                req.getRequestDispatcher("/views/scrap/add.jsp").forward(req, resp);
                 break;
             case "/approve":
                 Integer id = parseInt(req.getParameter("id"));
