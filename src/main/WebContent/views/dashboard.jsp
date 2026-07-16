@@ -23,8 +23,13 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="stat-label">资产总数</p>
-                            <h3 class="stat-value">${totalAsset != null ? totalAsset : '1,286'}</h3>
-                            <p class="text-sm mt-2 opacity-80"><i class="fas fa-arrow-up mr-1"></i>较上月 +23</p>
+                            <h3 class="stat-value">${totalAsset}</h3>
+                            <c:if test="${totalDiffAbs > 0}">
+                            <p class="text-sm mt-2 opacity-80"><i class="fas fa-arrow-${totalDiffTrend} mr-1"></i>较${periodLabel} ${totalDiff >= 0 ? '+' : '-'}${totalDiffAbs}</p>
+                            </c:if>
+                            <c:if test="${totalDiffAbs == 0}">
+                            <p class="text-sm mt-2 opacity-80">较${periodLabel} 持平</p>
+                            </c:if>
                         </div>
                         <div class="stat-icon"><i class="fas fa-box"></i></div>
                     </div>
@@ -33,8 +38,8 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="stat-label">在用资产</p>
-                            <h3 class="stat-value">${inUseAsset != null ? inUseAsset : '892'}</h3>
-                            <p class="text-sm mt-2 opacity-80">占比 69.4%</p>
+                            <h3 class="stat-value">${inUseAsset}</h3>
+                            <p class="text-sm mt-2 opacity-80">占比 ${inUsePercentStr}%</p>
                         </div>
                         <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
                     </div>
@@ -43,8 +48,13 @@
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="stat-label">维修中</p>
-                            <h3 class="stat-value">${repairingAsset != null ? repairingAsset : '18'}</h3>
-                            <p class="text-sm mt-2 opacity-80"><i class="fas fa-arrow-down mr-1"></i>较上周 -5</p>
+                            <h3 class="stat-value">${repairingAsset}</h3>
+                            <c:if test="${repairDiffAbs > 0}">
+                            <p class="text-sm mt-2 opacity-80"><i class="fas fa-arrow-${repairDiffTrend} mr-1"></i>较${weekOrPeriod} ${repairDiff >= 0 ? '+' : '-'}${repairDiffAbs}</p>
+                            </c:if>
+                            <c:if test="${repairDiffAbs == 0}">
+                            <p class="text-sm mt-2 opacity-80">较${weekOrPeriod} 持平</p>
+                            </c:if>
                         </div>
                         <div class="stat-icon"><i class="fas fa-tools"></i></div>
                     </div>
@@ -52,9 +62,9 @@
                 <div class="card stat-card bg-rose-500">
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="stat-label">本月报废</p>
-                            <h3 class="stat-value">${scrapAsset != null ? scrapAsset : '6'}</h3>
-                            <p class="text-sm mt-2 opacity-80">待审批 2</p>
+                            <p class="stat-label">报废资产</p>
+                            <h3 class="stat-value">${scrapAsset}</h3>
+                            <p class="text-sm mt-2 opacity-80">待审批 ${pendingScrapCount}</p>
                         </div>
                         <div class="stat-icon"><i class="fas fa-trash-alt"></i></div>
                     </div>
@@ -75,30 +85,30 @@
                         <div>
                             <div class="flex justify-between text-sm mb-1">
                                 <span class="text-gray-600">在库</span>
-                                <span class="font-semibold">${stockCount != null ? stockCount : '320'} (${stockPercent != null ? stockPercent : '24.9'}%)</span>
+                                <span class="font-semibold">${stockCount} (${stockPercent}%)</span>
                             </div>
-                            <div class="progress-bar"><div class="progress-fill bg-blue-500" style="width: ${stockPercent != null ? stockPercent : 24.9}%"></div></div>
+                            <div class="progress-bar"><div class="progress-fill bg-blue-500" style="width: ${stockPercent}%"></div></div>
                         </div>
                         <div>
                             <div class="flex justify-between text-sm mb-1">
                                 <span class="text-gray-600">部门在用</span>
-                                <span class="font-semibold">${inUseCount != null ? inUseCount : '892'} (${inUsePercent != null ? inUsePercent : '69.4'}%)</span>
+                                <span class="font-semibold">${inUseCount} (${inUsePercent}%)</span>
                             </div>
-                            <div class="progress-bar"><div class="progress-fill bg-emerald-500" style="width: ${inUsePercent != null ? inUsePercent : 69.4}%"></div></div>
+                            <div class="progress-bar"><div class="progress-fill bg-emerald-500" style="width: ${inUsePercent}%"></div></div>
                         </div>
                         <div>
                             <div class="flex justify-between text-sm mb-1">
                                 <span class="text-gray-600">维修中</span>
-                                <span class="font-semibold">${repairCount != null ? repairCount : '18'} (${repairPercent != null ? repairPercent : '1.4'}%)</span>
+                                <span class="font-semibold">${repairCount} (${repairPercent}%)</span>
                             </div>
-                            <div class="progress-bar"><div class="progress-fill bg-amber-500" style="width: ${repairPercent != null ? repairPercent : 1.4}%"></div></div>
+                            <div class="progress-bar"><div class="progress-fill bg-amber-500" style="width: ${repairPercent}%"></div></div>
                         </div>
                         <div>
                             <div class="flex justify-between text-sm mb-1">
                                 <span class="text-gray-600">报废</span>
-                                <span class="font-semibold">${scrapCount != null ? scrapCount : '56'} (${scrapPercent != null ? scrapPercent : '4.3'}%)</span>
+                                <span class="font-semibold">${scrapCount} (${scrapPercent}%)</span>
                             </div>
-                            <div class="progress-bar"><div class="progress-fill bg-rose-500" style="width: ${scrapPercent != null ? scrapPercent : 4.3}%"></div></div>
+                            <div class="progress-bar"><div class="progress-fill bg-rose-500" style="width: ${scrapPercent}%"></div></div>
                         </div>
                     </div>
                 </div>
@@ -118,41 +128,12 @@
                         </div>
                         </c:forEach>
                         <c:if test="${empty recentLogs}">
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-plus text-blue-600 text-xs"></i>
+                        <div class="text-center py-8">
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-inbox text-gray-400 text-lg"></i>
                             </div>
-                            <div>
-                                <p class="text-sm text-gray-800">新增资产 <span class="font-semibold">ThinkPad X1</span></p>
-                                <p class="text-xs text-gray-400">10分钟前 | 技术部</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-tools text-amber-600 text-xs"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-800">维修完成 <span class="font-semibold">HP打印机#1023</span></p>
-                                <p class="text-xs text-gray-400">1小时前 | 行政部</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-hand-holding text-emerald-600 text-xs"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-800">领用申请 <span class="font-semibold">显示器×3</span></p>
-                                <p class="text-xs text-gray-400">2小时前 | 财务部</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-trash-alt text-rose-600 text-xs"></i>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-800">报废审批 <span class="font-semibold">台式机#0891</span></p>
-                                <p class="text-xs text-gray-400">3小时前 | IT运维部</p>
-                            </div>
+                            <p class="text-gray-400 text-sm">暂无最近动态</p>
+                            <p class="text-gray-300 text-xs mt-1">资产操作记录将显示在此处</p>
                         </div>
                         </c:if>
                     </div>
@@ -189,28 +170,7 @@
                             </c:forEach>
                             <c:if test="${empty categoryStats}">
                             <tr class="table-row">
-                                <td class="font-medium text-gray-800">电子设备</td>
-                                <td class="text-center">856</td>
-                                <td class="text-center">¥2,450,000</td>
-                                <td class="text-center">¥1,680,000</td>
-                                <td class="text-center">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <div class="w-16 progress-bar"><div class="progress-fill bg-blue-500" style="width: 66.6%"></div></div>
-                                        <span class="text-xs">66.6%</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="table-row">
-                                <td class="font-medium text-gray-800">办公家具</td>
-                                <td class="text-center">430</td>
-                                <td class="text-center">¥860,000</td>
-                                <td class="text-center">¥520,000</td>
-                                <td class="text-center">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <div class="w-16 progress-bar"><div class="progress-fill bg-emerald-500" style="width: 33.4%"></div></div>
-                                        <span class="text-xs">33.4%</span>
-                                    </div>
-                                </td>
+                                <td colspan="5" class="text-center text-gray-400 py-4">暂无分类数据</td>
                             </tr>
                             </c:if>
                         </tbody>

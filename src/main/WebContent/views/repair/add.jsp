@@ -80,7 +80,7 @@
                     <div class="grid grid-cols-2 gap-6 mt-4">
                         <div class="form-group">
                             <label class="form-label">登记人ID</label>
-                            <input type="number" name="operatorId" class="form-input" value="1" placeholder="登记人ID" min="1">
+                            <input type="hidden" name="operatorId" value="${sessionScope.user.id}">
                         </div>
                         <div class="form-group">
                             <label class="form-label">预估维修费用 (¥)</label>

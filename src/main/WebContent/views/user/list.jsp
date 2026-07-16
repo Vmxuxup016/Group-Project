@@ -62,7 +62,7 @@
                             </td>
                             <td class="text-center">
                                 <a href="${pageContext.request.contextPath}/user/edit?id=${u.id}" class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-edit"></i></a>
-                                <a href="${pageContext.request.contextPath}/user/delete?id=${u.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirmDelete()"><i class="fas fa-trash"></i></a>
+                                <a href="${pageContext.request.contextPath}/user/delete?id=${u.id}" class="text-rose-600 hover:text-rose-800" onclick="return confirm('确定删除该用户吗？')"><i class="fas fa-trash"></i></a>
                             </td>
                         </tr>
                         </c:forEach>

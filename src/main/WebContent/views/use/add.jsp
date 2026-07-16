@@ -32,7 +32,7 @@
                 </c:if>
                 <form id="useForm" action="${pageContext.request.contextPath}/use/save" method="post">
                     <input type="hidden" name="operationType" value="${type}">
-                    <input type="hidden" name="operatorId" value="1">
+                    <input type="hidden" name="operatorId" value="${sessionScope.user.id}">
 
                     <div class="grid grid-cols-2 gap-6">
                         <div class="form-group">

@@ -76,8 +76,8 @@
                             </td>
                             <td class="text-center">
                                 <c:if test="${t.approvalStatus == 1}">
-                                <a href="${pageContext.request.contextPath}/transfer/approve?id=${t.id}&action=pass" class="text-emerald-600 hover:text-emerald-800 mr-2" title="通过"><i class="fas fa-check"></i></a>
-                                <a href="${pageContext.request.contextPath}/transfer/approve?id=${t.id}&action=reject" class="text-rose-600 hover:text-rose-800 mr-2" title="驳回"><i class="fas fa-times"></i></a>
+                                <a href="${pageContext.request.contextPath}/transfer/approve?id=${t.id}&action=pass" class="text-emerald-600 hover:text-emerald-800 mr-2" title="通过" onclick="return confirm('确定通过该调拨申请吗？')"><i class="fas fa-check"></i></a>
+                                <a href="${pageContext.request.contextPath}/transfer/approve?id=${t.id}&action=reject" class="text-rose-600 hover:text-rose-800 mr-2" title="驳回" onclick="return confirm('确定驳回该调拨申请吗？')"><i class="fas fa-times"></i></a>
                                 </c:if>
                                 <a href="${pageContext.request.contextPath}/transfer/detail?id=${t.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
                             </td>

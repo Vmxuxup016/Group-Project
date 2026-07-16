@@ -46,6 +46,23 @@
                 </div>
             </div>
 
+            <!-- 状态筛选 -->
+            <div class="card p-4 mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="text-sm text-gray-600 font-medium">状态筛选：</span>
+                    <a href="${pageContext.request.contextPath}/repair/list"
+                       class="px-3 py-1 rounded-full text-sm ${empty currentStatus ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}">全部</a>
+                    <a href="${pageContext.request.contextPath}/repair/list?status=1"
+                       class="px-3 py-1 rounded-full text-sm ${currentStatus == 1 ? 'bg-amber-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}">待维修</a>
+                    <a href="${pageContext.request.contextPath}/repair/list?status=2"
+                       class="px-3 py-1 rounded-full text-sm ${currentStatus == 2 ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}">维修中</a>
+                    <a href="${pageContext.request.contextPath}/repair/list?status=3"
+                       class="px-3 py-1 rounded-full text-sm ${currentStatus == 3 ? 'bg-emerald-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}">已完成</a>
+                    <a href="${pageContext.request.contextPath}/repair/list?status=4"
+                       class="px-3 py-1 rounded-full text-sm ${currentStatus == 4 ? 'bg-rose-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}">无法修复</a>
+                </div>
+            </div>
+
             <div class="card overflow-hidden">
                 <table class="data-table">
                     <thead>
@@ -92,7 +109,34 @@
                             </td>
                             <td class="text-right"><fmt:formatNumber value="${r.repairCost}" type="currency" currencySymbol="¥"/></td>
                             <td class="text-center">
-                                <a href="${pageContext.request.contextPath}/repair/detail?id=${r.id}" class="text-blue-600 hover:text-blue-800"><i class="fas fa-eye"></i></a>
+                                <div class="flex items-center justify-center gap-1.5">
+                                <a href="${pageContext.request.contextPath}/repair/detail?id=${r.id}"
+                                   class="inline-flex items-center px-2 py-1 text-xs rounded bg-gray-100 text-gray-600 hover:bg-gray-200 transition">
+                                    <i class="fas fa-eye mr-1"></i>详情
+                                </a>
+                                <c:if test="${r.repairStatus == 1}">
+                                <a href="${pageContext.request.contextPath}/repair/updateStatus?id=${r.id}&status=2"
+                                   class="inline-flex items-center px-2 py-1 text-xs rounded bg-blue-500 text-white hover:bg-blue-600 transition">
+                                    <i class="fas fa-play mr-1"></i>维修中
+                                </a>
+                                </c:if>
+                                <c:if test="${r.repairStatus == 1 || r.repairStatus == 2}">
+                                <a href="${pageContext.request.contextPath}/repair/updateStatus?id=${r.id}&status=3"
+                                   class="inline-flex items-center px-2 py-1 text-xs rounded bg-emerald-500 text-white hover:bg-emerald-600 transition">
+                                    <i class="fas fa-check mr-1"></i>已完成
+                                </a>
+                                </c:if>
+                                <c:if test="${r.repairStatus != 3 && r.repairStatus != 4}">
+                                <a href="${pageContext.request.contextPath}/repair/updateStatus?id=${r.id}&status=4"
+                                   class="inline-flex items-center px-2 py-1 text-xs rounded bg-rose-500 text-white hover:bg-rose-600 transition"
+                                   onclick="return confirm('确认标记为无法修复？')">
+                                    <i class="fas fa-ban mr-1"></i>无法修复
+                                </a>
+                                </c:if>
+                                <c:if test="${r.repairStatus == 3 || r.repairStatus == 4}">
+                                <span class="text-xs text-gray-400">-</span>
+                                </c:if>
+                                </div>
                             </td>
                         </tr>
                         </c:forEach>
