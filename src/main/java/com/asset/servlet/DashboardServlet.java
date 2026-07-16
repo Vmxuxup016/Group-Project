@@ -17,11 +17,17 @@ public class DashboardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, Object> data = dashboardService.getDashboardData();
+        String period = req.getParameter("period");
+        if (period == null || period.isEmpty()) {
+            period = "month";
+        }
+
+        Map<String, Object> data = dashboardService.getDashboardData(period);
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             req.setAttribute(entry.getKey(), entry.getValue());
         }
-        req.setAttribute("period", req.getParameter("period"));
+        req.setAttribute("period", period);
+        req.setAttribute("pageTitle", "数据仪表盘");
         req.getRequestDispatcher("/views/dashboard.jsp").forward(req, resp);
     }
 }

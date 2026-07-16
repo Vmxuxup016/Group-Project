@@ -26,9 +26,12 @@ public class RepairServlet extends HttpServlet {
 
         switch (path) {
             case "/list":
+                String statusParam = req.getParameter("status");
+                Integer filterStatus = (statusParam != null && !statusParam.isEmpty()) ? Integer.parseInt(statusParam) : null;
                 Map<String, Object> stats = repairService.getStats();
                 for (Map.Entry<String, Object> e : stats.entrySet()) req.setAttribute(e.getKey(), e.getValue());
-                req.setAttribute("repairList", repairService.findAll());
+                req.setAttribute("repairList", repairService.findByStatus(filterStatus));
+                req.setAttribute("currentStatus", filterStatus);
                 req.getRequestDispatcher("/views/repair/list.jsp").forward(req, resp);
                 break;
             case "/add":
@@ -39,6 +42,14 @@ public class RepairServlet extends HttpServlet {
             case "/detail":
                 req.setAttribute("repair", repairService.findById(parseInt(req.getParameter("id"))));
                 req.getRequestDispatcher("/views/repair/detail.jsp").forward(req, resp);
+                break;
+            case "/updateStatus":
+                Integer repairId = parseInt(req.getParameter("id"));
+                Integer newStatus = parseInt(req.getParameter("status"));
+                if (repairId != null && newStatus != null) {
+                    repairService.updateStatus(repairId, newStatus);
+                }
+                resp.sendRedirect(req.getContextPath() + "/repair/list");
                 break;
             default:
                 resp.sendRedirect(req.getContextPath() + "/repair/list");

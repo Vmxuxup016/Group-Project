@@ -46,6 +46,16 @@ public class AssetRepairDao {
                 repair.getFinishDate(), repair.getId());
     }
 
+    public List<AssetRepair> findByStatus(Integer status) {
+        if (status == null) return findAll();
+        String sql = "SELECT r.*, a.asset_code AS assetCode, a.asset_name AS assetName, d.dept_name AS deptName " +
+                     "FROM asset_repair r " +
+                     "LEFT JOIN asset a ON r.asset_id = a.id " +
+                     "LEFT JOIN department d ON r.report_dept_id = d.id " +
+                     "WHERE r.repair_status = ? ORDER BY r.id DESC";
+        return jdbc.query(sql, new BeanPropertyRowMapper<>(AssetRepair.class), status);
+    }
+
     public int updateStatus(Integer id, Integer status) {
         String sql = "UPDATE asset_repair SET repair_status=? WHERE id=?";
         return jdbc.update(sql, status, id);

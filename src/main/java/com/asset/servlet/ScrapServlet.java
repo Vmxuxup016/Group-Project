@@ -2,6 +2,7 @@ package com.asset.servlet;
 
 import com.asset.dao.AssetDao;
 import com.asset.pojo.AssetScrap;
+import com.asset.pojo.User;
 import com.asset.service.ScrapService;
 
 import javax.servlet.ServletException;
@@ -67,7 +68,13 @@ public class ScrapServlet extends HttpServlet {
             scrap.setOriginalValue(asset != null && asset.getPurchasePrice() != null
                     ? asset.getPurchasePrice() : BigDecimal.ZERO);
         }
-        scrap.setCreateBy(1);
+        // 从session获取当前登录用户ID
+        Integer userId = 1;
+        Object userObj = req.getSession().getAttribute("user");
+        if (userObj instanceof User) {
+            userId = ((User) userObj).getId();
+        }
+        scrap.setCreateBy(userId);
         scrapService.save(scrap);
         resp.sendRedirect(req.getContextPath() + "/scrap/list");
     }

@@ -16,6 +16,10 @@ public class RepairService {
         return repairDao.findAll();
     }
 
+    public List<AssetRepair> findByStatus(Integer status) {
+        return repairDao.findByStatus(status);
+    }
+
     public AssetRepair findById(Integer id) {
         return repairDao.findById(id);
     }
@@ -30,6 +34,10 @@ public class RepairService {
 
     public void update(AssetRepair repair) {
         repairDao.update(repair);
+    }
+
+    public void updateStatus(Integer id, Integer status) {
+        repairDao.updateStatus(id, status);
     }
 
     public Map<String, Object> getStats() {
